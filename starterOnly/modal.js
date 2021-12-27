@@ -32,7 +32,7 @@ const DATAS = [
   },
   {
     key: "checkbox1",
-    status: "default",
+    status: "success",
     errorMessage: null,
     validateFunction: validateCheckbox
   }
@@ -158,16 +158,29 @@ function checkValidity(id, value) {
   const obj = getObjByKey(id);
   const isValid = obj.validateFunction(value);
 
-  if (isValid) {
-    obj.status = "success";
-    obj.errorMessage = null;
-    hideError(obj);
+  if(obj.status === "error") {
+    if (isValid) {
+      obj.status = "success";
+      obj.errorMessage = null;
+      hideError(obj);
+    } else {
+      const error = getErrByKey(id);
+      obj.status = "error";
+      obj.errorMessage = error.errorMessage;
+      hideError(obj);
+      showError(obj);
+    } 
   } else {
-    const error = getErrByKey(id);
-    obj.status = "error";
-    obj.errorMessage = error.errorMessage;
-    showError(obj);
-  } 
+    if (isValid) {
+      obj.status = "success";
+      obj.errorMessage = null;
+    } else {
+      const error = getErrByKey(id);
+      obj.status = "error";
+      obj.errorMessage = error.errorMessage;
+      showError(obj);
+    } 
+  }
 }
 
 // Form's on-change handler
@@ -194,6 +207,13 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
+const submitBtn = document.querySelector(".btn-submit");
+
+// Disable submit button
+submitBtn.addEventListener('click', e => {
+  e.preventDefault();
+  validate();
+})
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -215,3 +235,31 @@ function closeModal() {
 DATAS.forEach(obj => {
   document.getElementById(obj.key).addEventListener('change', onChange);
 });
+
+// Validate form
+function validate() {
+  let counter = 0;
+
+  DATAS.forEach(obj => {
+    const domObj = document.getElementById(obj.key);
+
+    if (domObj.id === "checkbox1") {
+      checkValidity(domObj.id, domObj.checked);
+    } else {
+      checkValidity(domObj.id, domObj.value);
+    }
+
+    if (obj.status === "success") {
+      counter++;
+    }
+  });
+
+  if (counter === 6) {
+    const successMessage = document.createElement('p');
+    successMessage.textContent = "Inscription réussie."
+    successMessage.style.color = "lime";
+    successMessage.style.textAlign = "center";
+
+    submitBtn.replaceWith(successMessage);
+  }
+}
