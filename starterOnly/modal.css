@@ -95,13 +95,40 @@ img {
 }
 
 @media screen and (max-width: 540px) {
+    .topnav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
     .topnav a {
         display: none;
     }
     .topnav a.icon {
         float: right;
         display: block;
-        margin-top: -15px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .topnav.responsive {
+        position: relative;
+    }
+    .topnav.responsive > .main-navbar {
+        display: flex;
+        flex-direction: column;
+    }
+    .topnav.responsive .icon {
+        position: relative;
+        text-align: center;
+        order: 0;
+    }
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+        order: 1;
     }
 }
 
@@ -140,6 +167,19 @@ main {
 }
 
 /* Modal form */
+
+.validation-modal {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 100px 25px 50px 25px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
 
 .button {
     background: #fe142f;
