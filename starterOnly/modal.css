@@ -168,6 +168,19 @@ main {
 
 /* Modal form */
 
+.validation-modal {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 100px 25px 50px 25px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
 .button {
     background: #fe142f;
     margin-top: 0.5em;

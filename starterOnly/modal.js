@@ -183,6 +183,29 @@ function checkValidity(id, value) {
   }
 }
 
+function getFormStatus() {
+  let counter = 0;
+
+  DATAS.forEach(obj => {
+    const domObj = document.getElementById(obj.key);
+
+    if (domObj.id === "checkbox1") {
+      checkValidity(domObj.id, domObj.checked);
+    } else {
+      checkValidity(domObj.id, domObj.value);
+    }
+
+    if (obj.status === "success") {
+      counter++;
+    }
+  });
+  
+  if(counter === 6) {
+    return true;
+  }
+  return false;
+}
+
 // Form's on-change handler
 function onChange(event) {
   if (event.target.id === "checkbox1") {
@@ -238,28 +261,11 @@ DATAS.forEach(obj => {
 
 // Validate form
 function validate() {
-  let counter = 0;
-
-  DATAS.forEach(obj => {
-    const domObj = document.getElementById(obj.key);
-
-    if (domObj.id === "checkbox1") {
-      checkValidity(domObj.id, domObj.checked);
-    } else {
-      checkValidity(domObj.id, domObj.value);
-    }
-
-    if (obj.status === "success") {
-      counter++;
-    }
-  });
-
-  if (counter === 6) {
-    const successMessage = document.createElement('p');
-    successMessage.textContent = "Inscription réussie."
-    successMessage.style.color = "lime";
-    successMessage.style.textAlign = "center";
-
-    submitBtn.replaceWith(successMessage);
+  const formStatus = getFormStatus();
+  
+  if(formStatus) {
+    document.querySelector(".modal-body").style.display = "none";
+    document.querySelector(".validation-modal").style.display = "flex";
+    document.querySelector(".validation-modal > button").addEventListener("click", closeModal);
   }
 }
