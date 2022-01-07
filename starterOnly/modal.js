@@ -125,13 +125,20 @@ function validateCheckbox(value) {
 
 // Show error
 function showError(obj) {
-  document.getElementById(obj.key).classList.add('error');
+  const domObj = document.getElementById(obj.key)
+  
+    if(!domObj.classList.contains("error")) {
+      domObj.classList.add('error');
 
-  const errorParagraph = document.createElement('p');
-  errorParagraph.classList.add('error-message');
-  errorParagraph.textContent = obj.errorMessage;
+      const errorParagraph = document.createElement('p');
+      errorParagraph.classList.add('error-message');
+      errorParagraph.textContent = obj.errorMessage;
 
-  document.getElementById(obj.key).parentElement.appendChild(errorParagraph);
+      domObj.parentElement.appendChild(errorParagraph);
+    } else {
+      const errorParagraph = domObj.querySelector('p.error-message');
+      errorParagraph.textContent = obj.errorMessage;
+    }
 }
 
 // Hide error
@@ -141,6 +148,17 @@ function hideError(obj) {
   const formData = document.getElementById(obj.key).parentElement;
   const errorParagraph = formData.querySelector('.error-message');
   formData.removeChild(errorParagraph);
+}
+
+// Display errors
+function displayError(key) {
+  const obj = getObjByKey(key);
+
+  if (obj.status == "error") {
+    showError(obj);
+  } else {
+    hideError(obj);
+  }
 }
 
 // Get input datas for a key
@@ -158,19 +176,6 @@ function checkValidity(id, value) {
   const obj = getObjByKey(id);
   const isValid = obj.validateFunction(value);
 
-  if(obj.status === "error") {
-    if (isValid) {
-      obj.status = "success";
-      obj.errorMessage = null;
-      hideError(obj);
-    } else {
-      const error = getErrByKey(id);
-      obj.status = "error";
-      obj.errorMessage = error.errorMessage;
-      hideError(obj);
-      showError(obj);
-    } 
-  } else {
     if (isValid) {
       obj.status = "success";
       obj.errorMessage = null;
@@ -178,9 +183,7 @@ function checkValidity(id, value) {
       const error = getErrByKey(id);
       obj.status = "error";
       obj.errorMessage = error.errorMessage;
-      showError(obj);
     } 
-  }
 }
 
 function getFormStatus() {
@@ -213,6 +216,7 @@ function onChange(event) {
   } else {
     checkValidity(event.target.id, event.target.value);
   }
+  displayError(event.target.id);
 }
 
 // Responsive handler for the navigation section
