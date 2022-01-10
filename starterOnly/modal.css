@@ -177,6 +177,10 @@ main {
     padding: 100px 25px 50px 25px;
 }
 
+.validation-modal > h2 {
+    text-align: center;
+}
+
 button {
     background-color: transparent;
     border: none;

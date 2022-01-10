@@ -236,12 +236,6 @@ const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
 const submitBtn = document.querySelector(".btn-submit");
 
-// Disable submit button
-submitBtn.addEventListener('click', e => {
-  e.preventDefault();
-  validate();
-})
-
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -262,6 +256,12 @@ function closeModal() {
 DATAS.forEach(obj => {
   document.getElementById(obj.key).addEventListener('change', onChange);
 });
+
+// Disable submit button default behavior
+submitBtn.addEventListener('click', e => {
+  e.preventDefault();
+  validate();
+})
 
 // Validate form
 function validate() {
