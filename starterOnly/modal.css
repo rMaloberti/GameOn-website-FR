@@ -173,7 +173,7 @@ main {
     display: none;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 100px 25px 50px 25px;
 }
 
