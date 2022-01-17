@@ -33,12 +33,18 @@ img {
 .topnav {
     overflow: hidden;
     margin: 3.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .header-logo {
     float: left;
 }
 .main-navbar {
     float: right;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
 }
 .topnav a {
     float: left;
@@ -73,17 +79,23 @@ img {
         display: none;
     }
     .topnav a.icon {
+        color: red;
         float: right;
         display: block;
+    }
+    .topnav a.icon:hover {
+        color: white;
     }
 }
 
 @media screen and (max-width: 768px) {
     .topnav.responsive {
         position: relative;
+        align-items: flex-start;
     }
     .topnav.responsive .icon {
         position: absolute;
+        color: white;
         right: 0;
         top: 0;
     }
@@ -519,6 +531,9 @@ footer {
     margin: 0 20px;
 }
 @media screen and (max-width: 800px) {
+    .main-navbar {
+        display: block;
+    }
     .hero-section {
         display: block;
         box-shadow: unset;
@@ -568,7 +583,7 @@ footer {
     }
 
     .topnav a {
-        font-size: 4vw;
+        font-size: 5vw;
         margin: 0;
         padding: 2.5vw;
     }
