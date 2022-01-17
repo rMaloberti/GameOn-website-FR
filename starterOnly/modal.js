@@ -78,10 +78,12 @@ function validateName(value) {
 
 // Email validation
 function validateEmail(value) {
+    const valueSanitized = value.replace(" ", "");
+
     // Matches anystring@anystring.anystring with 1 and only 1 @
     const regex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
-    return regex.test(value);
+    return regex.test(valueSanitized) && valueSanitized.length > 3;
 }
 
 // Birth date validation
