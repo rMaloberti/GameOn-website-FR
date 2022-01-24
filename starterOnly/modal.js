@@ -146,11 +146,13 @@ function showError(obj) {
 
 // Hide error
 function hideError(obj) {
-    document.getElementById(obj.key).classList.remove("error");
+    if (document.getElementById(obj.key).classList.contains("error")) {
+        document.getElementById(obj.key).classList.remove("error");
 
-    const formData = document.getElementById(obj.key).parentElement;
-    const errorParagraph = formData.querySelector(".error-message");
-    formData.removeChild(errorParagraph);
+        const formData = document.getElementById(obj.key).parentElement;
+        const errorParagraph = formData.querySelector(".error-message");
+        formData.removeChild(errorParagraph);
+    }
 }
 
 // Display errors
