@@ -174,10 +174,14 @@ function getErrByKey(key) {
     return ERRORS.filter((obj) => obj.key === key)[0];
 }
 
+function filterByKey(array, key) {
+    return array.filter((obj) => obj.key === key)[0];
+}
+
 // Check validity of an input
 function checkValidity(id, value) {
     const obj = getObjByKey(id);
-    const isValid = obj.validateFunction(value);
+    const isValid = value.length < 1 ? false : obj.validateFunction(value);
 
     if (isValid) {
         obj.status = "success";
@@ -201,6 +205,8 @@ function getFormStatus() {
         } else {
             checkValidity(domObj.id, domObj.value);
         }
+
+        displayError(domObj.id);
 
         if (obj.status === "success") {
             counter++;
